@@ -1,0 +1,5 @@
+This repository contains modified sources of the following repositories:
+1. https://github.com/named-data/jndn
+2. https://github.com/named-data-mobile/apps-NDN-Whiteboard
+This application works as the original authors of the NDNWhiteboard app intended (please follow the second link for more information). However, the implementation contained within this repository embeds a custom protocol of information exchange between Android devices with Whiteboard app installed on them into the application itself. This custom protocol is based on the Named Data Networking API and requires access to a working NDN Forwarding deamon, whose sources can be found at: https://github.com/named-data/NFD.
+Details describing what has been altered in the project in relation to the original sources, steps necessary to configure the architecture of this solution properly and the discussion of high-level concepts of our custom protocol can be found in the pdf file in the root folder of this repository. Requirement: an excelent knowledge of the Polish technical language.
