@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NDNWhiteboard</string>
+    <string name="title_activity_whiteboard">NDNWhiteboard</string>
+    <string name="title_activity_intro">NDNWhiteboard</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_settings">Send Text</string>
+    <string name="speech_settings">Speech</string>
+</resources>

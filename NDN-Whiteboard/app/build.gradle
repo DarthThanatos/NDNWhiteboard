@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "net.named_data.android.whiteboard"
+        minSdkVersion 22
+        targetSdkVersion 28
+        versionCode 101
+        versionName "0.2"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    implementation('net.named-data:jndn-android:0.17') {
+      exclude group: 'org.xerial'
+      exclude group: 'com.google.android'
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+if (properties['keystore'] == null || properties['keystore.password'] == null ||
+    properties['keystore.key.alias'] == null || properties['keystore.key.password'] == null) {
+    println("Cannot sign .apk: specify keystore, keystore.password, keystore.key.alias, and keystore.key.password in local.properties.")
+}
+else {
+    android {
+        signingConfigs {
+            release {
+                storeFile file(properties['keystore'])
+                storePassword properties['keystore.password']
+                keyAlias properties['keystore.key.alias']
+                keyPassword properties['keystore.key.password']
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
+
+if (properties['google-play'] != null) {
+    // apply plugin: 'net.named-data.playground.play'
+    apply plugin: 'com.github.triplet.play'
+
+    play {
+        track = 'alpha'
+        jsonFile = file(properties['google-play'])
+    }
+}
